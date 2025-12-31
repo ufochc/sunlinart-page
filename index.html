@@ -305,32 +305,31 @@
         <section class="section" id="works">
           <h2>作品（自動生成）</h2>
           <p>
-            你只要把命名好的 JPG 檔案放進 <span class="fine">assets/</span>，
-            這個頁面就會自動抓取檔名並生成作品卡（標題／媒材／尺寸）。
+            你只要把 JPG 檔案放進 <span class="fine">assets/</span>，這頁就會自動抓取並生成作品卡。
+            目前支援你提供的命名格式，例如：<br/>
+            <span class="fine">2025 抽象系列07_畫布_60x60 (4)_未售.jpg</span>
           </p>
-
+        
           <div class="works" id="worksGrid" aria-label="作品图（自动生成）">
-            <!-- ✅ 预留：如果自动抓取失败，仍然保留两张手动示例图 -->
+            <!-- 若自动抓取失败，会先显示示例图 -->
             <figure>
-              <img src="assets/work-01.jpg" alt="作品 01（示意）" />
-              <figcaption><b>作品標題 01</b>｜年份｜媒材｜尺寸</figcaption>
+              <img src="assets/work-01.jpg" alt="作品（示意）" />
+              <figcaption><b>作品（示意）</b>｜媒材｜尺寸</figcaption>
             </figure>
             <figure>
-              <img src="assets/work-02.jpg" alt="作品 02（示意）" />
-              <figcaption><b>作品標題 02</b>｜年份｜媒材｜尺寸</figcaption>
+              <img src="assets/work-02.jpg" alt="作品（示意）" />
+              <figcaption><b>作品（示意）</b>｜媒材｜尺寸</figcaption>
             </figure>
           </div>
-
+        
           <p class="fine" style="margin-top:12px">
-            檔名命名建议（两种任选一种，越一致越省事）：<br/>
-            A) <span class="fine">001__作品名__水性媒材__100x80cm.jpg</span><br/>
-            B) <span class="fine">2025-001__作品名__水性媒材__100x80cm.jpg</span>
-          </p>
-
-          <p class="fine">
-            分享卡预览图通常取 <span class="fine">og:image</span>（建议 1200×630）。
+            命名解析规则：<br/>
+            <span class="fine">{年份 空格 作品名}_{媒材}_{尺寸} (F數)_{售况}.jpg</span><br/>
+            例：<span class="fine">2025 抽象系列07_畫布_60x60 (4)_未售.jpg</span>
+            → 顯示為「抽象系列07｜畫布｜60×60｜4F｜未售」。
           </p>
         </section>
+
 
         
       </article>
@@ -347,14 +346,125 @@
     </div>
   </main>
 
-  <script>
-    const now = new Date();
-    const iso = now.toISOString().slice(0,10);
-    document.getElementById('y').textContent = now.getFullYear();
-    document.getElementById('u').textContent = iso;
-    // 你也可以固定发布日期：把下一行的 iso 替换成你要的日期
-    document.getElementById('d').textContent = iso;
-  </script>
+<script>
+  // ===== 日期（页脚与发布标签） =====
+  const now = new Date();
+  const iso = now.toISOString().slice(0,10);
+  document.getElementById('y')?.textContent = now.getFullYear();
+  document.getElementById('u')?.textContent = iso;
+  document.getElementById('d')?.textContent = iso;
+
+  // ===== 作品自動生成（GitHub Pages 用）=====
+  const GH_OWNER = 'ufochc';
+  const GH_REPO  = 'sunlinart-page';
+  const GH_PATH  = 'assets';
+
+  const grid = document.getElementById('worksGrid');
+  if (!grid) throw new Error('worksGrid not found');
+
+  const isSupported = (name) => {
+    const n = String(name || '').toLowerCase();
+    return n.endsWith('.jpg') || n.endsWith('.jpeg') || n.endsWith('.png') || n.endsWith('.webp');
+  };
+
+  const stripExt = (name) => {
+    const s = String(name || '');
+    const i = s.lastIndexOf('.');
+    return i >= 0 ? s.slice(0, i) : s;
+  };
+
+  const escapeHtml = (s) => String(s)
+    .replaceAll('&','&amp;')
+    .replaceAll('<','&lt;')
+    .replaceAll('>','&gt;')
+    .replaceAll('"','&quot;')
+    .replaceAll("'",'&#39;');
+
+  // 解析格式：2025 抽象系列07_畫布_60x60 (4)_未售
+  const parseName = (filename) => {
+    const base = stripExt(filename);
+    const parts = base.split('_').map(x => x.trim()).filter(Boolean);
+
+    let year = '';
+    let title = parts[0] || base;
+
+    // 年份判断：前4位数字 + 空格
+    if (title.length >= 6) {
+      const y = title.slice(0,4);
+      const space = title.charAt(4);
+      if (y >= '1900' && y <= '2100' && space === ' ') {
+        year = y;
+        title = title.slice(5).trim();
+      }
+    }
+
+    const medium = parts[1] || '';
+
+    // 尺寸段可能包含 (4)
+    let sizeRaw = parts[2] || '';
+    let fNo = '';
+    const lp = sizeRaw.lastIndexOf('(');
+    const rp = sizeRaw.lastIndexOf(')');
+    if (lp >= 0 && rp > lp) {
+      const inside = sizeRaw.slice(lp+1, rp).trim();
+      if (inside && inside.split('').every(ch => ch >= '0' && ch <= '9')) {
+        fNo = inside + 'F';
+        sizeRaw = (sizeRaw.slice(0, lp) + sizeRaw.slice(rp+1)).trim();
+      }
+    }
+
+    let size = sizeRaw.trim().replaceAll('x','×').replaceAll('X','×');
+    const status = parts[3] || '';
+
+    return { year, title, medium, size, fNo, status };
+  };
+
+  async function loadWorks(){
+    const api = `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${GH_PATH}`;
+    const res = await fetch(api, { headers: { 'Accept': 'application/vnd.github+json' }});
+    if (!res.ok) return; // 失败就保留示例图
+
+    const items = await res.json();
+    if (!Array.isArray(items)) return;
+
+    const files = items
+      .filter(it => it && it.type === 'file' && isSupported(it.name))
+      .filter(it => !String(it.name).toLowerCase().startsWith('title-art.'))
+      // 默认排除示例图（你若把它们当真实作品就删掉这一行）
+      .filter(it => !String(it.name).toLowerCase().startsWith('work-0'))
+      .sort((a,b) => String(a.name).localeCompare(String(b.name), 'zh-Hant'));
+
+    if (files.length === 0) return;
+
+    grid.innerHTML = '';
+
+    for (const f of files) {
+      const meta = parseName(f.name);
+      const bits = [];
+      if (meta.medium) bits.push(meta.medium);
+      if (meta.size) bits.push(meta.size);
+      if (meta.fNo) bits.push(meta.fNo);
+      if (meta.status) bits.push(meta.status);
+
+      const caption = bits.join('｜');
+      const title = meta.title || stripExt(f.name);
+
+      grid.insertAdjacentHTML('beforeend',
+        `<figure>
+          <img src="${escapeHtml(f.path)}" alt="${escapeHtml(title)}" loading="lazy" />
+          <figcaption><b>${escapeHtml(title)}</b>${caption ? '｜' + escapeHtml(caption) : ''}</figcaption>
+        </figure>`
+      );
+    }
+  }
+
+  loadWorks().catch(() => { /* 保留示例图 */ });
+</script>
+
 </body>
 </html>
+
+
+
+
 
