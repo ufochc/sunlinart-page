@@ -342,40 +342,40 @@
 
 <script>
   // ===== 日期（页脚与发布标签） =====
-  const now = new Date();
-  const iso = now.toISOString().slice(0,10);
-  document.getElementById('y')?.textContent = now.getFullYear();
-  document.getElementById('u')?.textContent = iso;
-  document.getElementById('d')?.textContent = iso;
+  (function(){
+    const now = new Date();
+    const iso = now.toISOString().slice(0,10);
+    const y = document.getElementById('y');
+    const u = document.getElementById('u');
+    const d = document.getElementById('d');
+    if (y) y.textContent = now.getFullYear();
+    if (u) u.textContent = iso;
+    if (d) d.textContent = iso;
+  })();
 
-  // ===== 作品自動生成（GitHub Pages 用）=====
-  const GH_OWNER = 'ufochc';
-  const GH_REPO  = 'sunlinart-page';
-  const GH_PATH  = 'assets';
-
-  const grid = document.getElementById('worksGrid');
-  const statusEl = document.getElementById('worksStatus');
-
-  const isSupported = (name) => {
+  // ===== 工具函数 =====
+  function isSupported(name){
     const n = String(name || '').toLowerCase();
     return n.endsWith('.jpg') || n.endsWith('.jpeg') || n.endsWith('.png') || n.endsWith('.webp');
-  };
+  }
 
-  const stripExt = (name) => {
+  function stripExt(name){
     const s = String(name || '');
     const i = s.lastIndexOf('.');
     return i >= 0 ? s.slice(0, i) : s;
-  };
+  }
 
-  const escapeHtml = (s) => String(s)
-    .replaceAll('&','&amp;')
-    .replaceAll('<','&lt;')
-    .replaceAll('>','&gt;')
-    .replaceAll('"','&quot;')
-    .replaceAll("'",'&#39;');
+  function escapeHtml(s){
+    return String(s)
+      .replaceAll('&','&amp;')
+      .replaceAll('<','&lt;')
+      .replaceAll('>','&gt;')
+      .replaceAll('"','&quot;')
+      .replaceAll("'",'&#39;');
+  }
 
-  // 解析格式：2025 抽象系列07_畫布_60x60 (4)_未售
-  const parseName = (filename) => {
+  // 解析格式：2025 抽象系列07_畫布_60x60 (4)_未售.jpg
+  function parseName(filename){
     const base = stripExt(filename);
     const parts = base.split('_').map(x => x.trim()).filter(Boolean);
 
@@ -411,67 +411,76 @@
     const status = parts[3] || '';
 
     return { year, title, medium, size, fNo, status };
-  };
-
-  async function loadWorks(){
-    if (!grid) return;
-
-    const api = `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${GH_PATH}`;
-    const res = await fetch(api, { headers: { 'Accept': 'application/vnd.github+json' }});
-
-    if (!res.ok) {
-      if (statusEl) statusEl.textContent = `作品清單載入失敗（GitHub API ${res.status}）`;
-      return; // 保留示例图
-    }
-
-    const items = await res.json();
-    if (!Array.isArray(items)) {
-      if (statusEl) statusEl.textContent = '作品清單格式異常（非陣列）';
-      return;
-    }
-
-    const files = items
-      .filter(it => it && it.type === 'file' && isSupported(it.name))
-      .filter(it => !String(it.name).toLowerCase().startsWith('title-art.'))
-      .filter(it => !String(it.name).toLowerCase().startsWith('work-0')) // 排除示例
-      .sort((a,b) => String(a.name).localeCompare(String(b.name), 'zh-Hant'));
-
-    if (files.length === 0) {
-      if (statusEl) statusEl.textContent = 'assets/ 內未找到作品圖片（jpg/jpeg/png/webp）';
-      return;
-    }
-
-    if (statusEl) statusEl.textContent = `已載入 ${files.length} 件作品。`;
-
-    grid.innerHTML = '';
-
-    for (const f of files) {
-      const meta = parseName(f.name);
-      const bits = [];
-      if (meta.medium) bits.push(meta.medium);
-      if (meta.size) bits.push(meta.size);
-      if (meta.fNo) bits.push(meta.fNo);
-      if (meta.status) bits.push(meta.status);
-
-      const caption = bits.join('｜');
-      const title = meta.title || stripExt(f.name);
-
-      grid.insertAdjacentHTML('beforeend',
-        `<figure>
-          <img src="${escapeHtml(f.path)}" alt="${escapeHtml(title)}" loading="lazy" />
-          <figcaption><b>${escapeHtml(title)}</b>${caption ? '｜' + escapeHtml(caption) : ''}</figcaption>
-        </figure>`
-      );
-    }
   }
 
-  loadWorks().catch(() => {
-    if (statusEl) statusEl.textContent = '作品載入失敗（請稍後重試或檢查 repo 權限）';
-  });
+  // ===== 从 works.json 生成作品卡（最稳）=====
+  (async function(){
+    const grid = document.getElementById('worksGrid');
+    const statusEl = document.getElementById('worksStatus');
+
+    if (!grid) return;
+
+    try {
+      if (statusEl) statusEl.textContent = '正在載入作品清單…';
+
+      // 关键：你要在 assets/ 放这个 works.json
+      const res = await fetch('assets/works.json', { cache: 'no-store' });
+
+      if (!res.ok) {
+        if (statusEl) statusEl.textContent = `works.json 載入失敗（HTTP ${res.status}）`;
+        return;
+      }
+
+      const list = await res.json();
+      if (!Array.isArray(list) || list.length === 0) {
+        if (statusEl) statusEl.textContent = 'works.json 為空或格式不正確';
+        return;
+      }
+
+      // 只保留图片
+      const files = list
+        .map(x => String(x || '').trim())
+        .filter(x => x && isSupported(x));
+
+      if (files.length === 0) {
+        if (statusEl) statusEl.textContent = 'works.json 內沒有可用圖片檔名（jpg/jpeg/png/webp）';
+        return;
+      }
+
+      if (statusEl) statusEl.textContent = `已載入 ${files.length} 件作品。`;
+
+      grid.innerHTML = '';
+
+      for (const name of files) {
+        const meta = parseName(name);
+
+        const bits = [];
+        if (meta.medium) bits.push(meta.medium);
+        if (meta.size) bits.push(meta.size);
+        if (meta.fNo) bits.push(meta.fNo);
+        if (meta.status) bits.push(meta.status);
+
+        const caption = bits.join('｜');
+        const title = meta.title || stripExt(name);
+
+        grid.insertAdjacentHTML('beforeend',
+          `<figure>
+            <img src="assets/${escapeHtml(name)}" alt="${escapeHtml(title)}" loading="lazy" />
+            <figcaption><b>${escapeHtml(title)}</b>${caption ? '｜' + escapeHtml(caption) : ''}</figcaption>
+          </figure>`
+        );
+      }
+
+    } catch (e) {
+      if (statusEl) statusEl.textContent = '作品載入失敗（請檢查 works.json 是否存在與格式）';
+    }
+  })();
 </script>
+
 
 </body>
 </html>
+
 
 
 
