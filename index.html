@@ -30,52 +30,59 @@
     "@type": "Article",
     "headline": "林順雄｜從形象到痕跡：把觀看的經驗留下來",
     "description": "林順雄近年的抽象創作：不是離開形象，而是把『觀看的經驗』留下來。",
-    "image": ["https://YOUR-DOMAIN.COM/assets/title-art.png"],
+    "image": ["https://ufochc.github.io/sunlinart-page/assets/title-art.png"],
     "author": {"@type": "Person", "name": "林順雄"},
     "publisher": {"@type": "Organization", "name": "林順雄工作室"},
     "datePublished": "2025-12-31",
     "dateModified": "2025-12-31",
-    "mainEntityOfPage": "https://YOUR-DOMAIN.COM/linshunxiong"
+    "mainEntityOfPage": "https://ufochc.github.io/sunlinart-page/"
   }
   </script>
 
   <style>
+    /*
+      设计基准（参考）：
+      - Tate / MoMA / Fondation Cartier 展览通稿页
+      - Hauser & Wirth / David Zwirner Exhibition Press
+      核心原则：白不是纯白，而是“纸感”；设计退后，作品与文字在前。
+    */
+
     :root{
-      --bg:#0b0b0c;
-      --paper:#111114;
-      --text:#f3f3f3;
-      --muted:#b9b9b9;
-      --line:rgba(255,255,255,.12);
-      --soft:rgba(255,255,255,.06);
-      --radius:18px;
-      --max: 860px;
+      --bg:#f4f3ef;          /* 画册纸张白（国际主流） */
+      --paper:#ffffff;      /* 正文白 */
+      --text:#1f1f1f;       /* 柔黑 */
+      --muted:#6d6d6d;      /* 注释灰 */
+      --line:rgba(0,0,0,.07); /* 极细边界 */
+      --soft:#efefeb;       /* 引文浅底 */
+      --radius:10px;        /* 更接近学术出版 */
+      --max: 760px;         /* 收紧版心，像展览手册 */
       --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
       --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Noto Sans", "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
     }
 
     *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
+    html,body{
       margin:0;
       font-family: var(--sans);
-      background:
-        radial-gradient(1200px 700px at 18% 0%, rgba(255,255,255,.06), transparent 50%),
-        radial-gradient(900px 650px at 82% 12%, rgba(255,255,255,.05), transparent 55%),
-        var(--bg);
+      background: var(--bg);
       color: var(--text);
-      letter-spacing: .2px;
+      letter-spacing: .12px;
       -webkit-font-smoothing: antialiased;
       text-rendering: optimizeLegibility;
     }
 
-    a{color:inherit}
-    .wrap{max-width: var(--max); margin:0 auto; padding: 0 16px;}
+    a{color:inherit; text-decoration:none}
 
-    /* ✅ 更像“新闻/专稿”的版式：单栏、易读、易转发 */
-    header{padding: 18px 0 10px;}
+    .wrap{
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 18px;
+    }
+
+    /* Header / Cover */
+    header{padding: 32px 0 18px;}
     .mast{
-      margin-top: 12px;
-      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      background: var(--paper);
       border: 1px solid var(--line);
       border-radius: var(--radius);
       overflow:hidden;
@@ -83,98 +90,134 @@
     .cover{
       width:100%;
       aspect-ratio: 1200/630;
-      background:
-        linear-gradient(135deg, rgba(255,255,255,.10), rgba(255,255,255,.02)),
-        url('assets/title-art.png');
-      background-size: cover;
-      background-position: center;
+      background: url('assets/title-art.png') center/cover no-repeat;
       border-bottom: 1px solid var(--line);
     }
+    .head{padding: 22px 22px 18px;}
 
-    .head{padding: 16px 16px 14px;}
-    .kicker{font-family: var(--mono); font-size: 12px; color: var(--muted); letter-spacing: .9px;}
-    h1{margin: 10px 0 10px; font-size: 26px; line-height: 1.25; letter-spacing:.1px;}
-    .sub{margin:0; color: var(--muted); font-size: 14px; line-height: 1.8; max-width: 62ch;}
+    .kicker{
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 1px;
+    }
+    h1{
+      margin: 14px 0 14px;
+      font-size: 26px;
+      line-height: 1.4;
+      font-weight: 500;
+    }
+    .sub{
+      margin:0;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.9;
+      max-width: 58ch;
+    }
 
-    .meta{display:flex; gap: 10px; flex-wrap:wrap; align-items:center; margin-top: 10px; color: var(--muted); font-size: 12px;}
-    .meta span{padding: 6px 10px; border: 1px solid rgba(255,255,255,.10); border-radius: 999px; background: rgba(0,0,0,.18)}
+    .meta{
+      display:flex;
+      gap: 8px;
+      flex-wrap:wrap;
+      margin-top: 14px;
+      font-size: 11px;
+      color: var(--muted);
+    }
+    .meta span{
+      padding: 4px 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: transparent;
+    }
 
-    main{padding: 12px 0 32px;}
+    main{padding: 22px 0 40px;}
     .paper{
-      background: rgba(0,0,0,.18);
+      background: var(--paper);
       border: 1px solid var(--line);
       border-radius: var(--radius);
-      overflow:hidden;
     }
 
-    .section{padding: 16px; border-top: 1px solid rgba(255,255,255,.08)}
-    .section:first-child{border-top: 0}
+    .section{
+      padding: 22px 22px 20px;
+      border-top: 1px solid var(--line);
+    }
+    .section:first-child{border-top:0}
 
-    h2{margin:0 0 10px; font-size: 16px; letter-spacing:.2px;}
-    p{margin: 10px 0; color: var(--muted); line-height: 1.9; font-size: 14px;}
+    h2{
+      margin: 0 0 16px;
+      font-size: 17px;
+      font-weight: 500;
+    }
 
+    p{
+      margin: 12px 0;
+      color: var(--muted);
+      line-height: 1.95;
+      font-size: 14px;
+    }
+
+    /* Quote block – international exhibition standard */
     .quote{
-      margin: 12px 0 4px;
-      padding: 14px 14px;
-      border-radius: 14px;
-      background: rgba(255,255,255,.04);
-      border: 1px solid rgba(255,255,255,.10);
+      margin: 22px 0 18px;
+      padding: 16px 18px;
+      background: var(--soft);
+      border-left: 3px solid rgba(0,0,0,.18);
     }
-    .quote b{display:block; font-size: 14px; color: var(--text); line-height:1.8}
-    .quote small{display:block; margin-top: 8px; color: var(--muted); font-family: var(--mono);}
-
-    ul{margin: 10px 0 0; padding-left: 18px; color: var(--muted); line-height: 1.9; font-size: 14px;}
-    li{margin: 6px 0}
-
-    .grid{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-top: 10px;
+    .quote b{
+      display:block;
+      font-size: 14px;
+      line-height: 1.9;
+      color: var(--text);
+      font-weight: 500;
     }
-    @media (max-width: 720px){.grid{grid-template-columns:1fr}}
-
-    .card{
-      padding: 14px;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(0,0,0,.16);
+    .quote small{
+      display:block;
+      margin-top: 8px;
+      font-size: 12px;
+      color: var(--muted);
+      font-family: var(--mono);
     }
-    .card strong{display:block; font-size: 13px;}
-    .card span{display:block; margin-top: 6px; color: var(--muted); font-size: 13px; line-height:1.75}
 
+    /* Works grid */
     .works{
       display:grid;
       grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-top: 10px;
+      gap: 14px;
+      margin-top: 14px;
     }
     @media (max-width: 720px){.works{grid-template-columns:1fr}}
 
-    figure{margin:0; border-radius: 14px; overflow:hidden; border:1px solid rgba(255,255,255,.12); background: rgba(0,0,0,.16)}
-    figure img{width:100%; height:auto; display:block}
-    figcaption{padding: 10px 12px; color: var(--muted); font-size: 12px; line-height:1.6}
-    figcaption b{color: var(--text)}
-
-    .actions{display:flex; gap:10px; flex-wrap:wrap; margin-top: 10px;}
-    .btn{
-      display:inline-flex; align-items:center; justify-content:center;
-      padding: 10px 12px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.06);
-      color: var(--text);
-      font-size: 13px;
-      text-decoration:none;
+    figure{
+      margin:0;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      overflow:hidden;
     }
-    .btn:hover{background: rgba(255,255,255,.10)}
-    .btn.primary{background: rgba(255,255,255,.14)}
+    figure img{width:100%; height:auto; display:block}
+    figcaption{
+      padding: 10px 12px;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    figcaption b{color: var(--text); font-weight: 500}
 
     .fine{font-family: var(--mono); font-size: 12px; color: var(--muted)}
-    footer{padding: 18px 0 38px; color: var(--muted); font-size: 12px;}
-    .foot{display:flex; gap: 10px; justify-content:space-between; flex-wrap:wrap; border-top:1px solid rgba(255,255,255,.10); padding-top: 12px;}
 
-    /* ✅ 少量 JS：仅用于显示日期（可删除，不影响分享） */
+    footer{
+      padding: 24px 0 0;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .foot{
+      display:flex;
+      justify-content:space-between;
+      gap: 10px;
+      border-top: 1px solid var(--line);
+      padding-top: 12px;
+      flex-wrap:wrap;
+    }
   </style>
 </head>
 
@@ -216,74 +259,81 @@
     <div class="wrap">
       <article class="paper" aria-label="新聞頁內容">
 
-        <section class="section" id="idea">
-          <h2>一個核心判断</h2>
+        <section class="section" id="statement">
+          <h2>藝術家自述｜關於這次的作品</h2>
           <p>
-            <b style="color:var(--text)">抽象不是逃離具象</b>，而是把注意力從物件的外形，移回到「觀看本身」：
-            我如何看、看見什麼、以及哪些東西在時間裡沉澱下來。
+            回看這一段時間的創作，我常有一種感覺：畫面並不是需要再多加什麼，
+            而是要慢慢拿掉那些已經不必要的東西。
           </p>
-          <div class="grid">
-            <div class="card">
-              <strong>從「像」到「痕跡」</strong>
-              <span>形象可以退場，但痕跡會留下。痕跡是時間的證詞。</span>
-            </div>
-            <div class="card">
-              <strong>從「控制」到「允許」</strong>
-              <span>水性會流動，流動本身就是時間；不可控是作品的必要部分。</span>
-            </div>
+          <p>
+            這些作品不是為了證明我「走到了哪一種風格」，
+            而是記錄我在畫面前停下來的方式。
+            當我不再急著把事情交代清楚，畫面反而開始留下時間。
+          </p>
+
+          <div class="quote" role="note" aria-label="藝術家訪談節錄">
+            <b>我不是不畫了，我只是不再一直追著畫面跑。很多時候，是等它自己慢慢出現。</b>
+            <small>— 林順雄</small>
           </div>
+
+          <p>
+            在這次展出的六十餘件作品中，有些畫面幾乎是在反覆的乾與濕之間完成，
+            有些則刻意保留了沒有被「處理完」的區域。
+            那些看似停下來的地方，往往才是我真正下決定的時刻。
+          </p>
+
+          <p>
+            例如在《靜置的邊界》（檔名示例：<span class="fine">012__靜置的邊界__水性媒材__100x80cm.jpg</span>）這件作品裡，
+            我並沒有試圖把畫面收得完整，而是讓水痕在邊緣自然停住。
+            對我來說，那個停住的瞬間，比任何形象都來得真實。
+          </p>
+
+          <p>
+            另一件《未命名（留白）》(<span class="fine">027__未命名（留白）__水性媒材__120x90cm.jpg</span>)，
+            中央的大面積空白不是預先設計的結果，
+            而是在多次覆蓋之後，我選擇不再介入。
+            那裡留下的，是我與畫面之間的一次讓步。
+          </p>
+
+          <p class="fine">
+            上述作品僅作為閱讀線索舉例；完整作品將依 <span class="fine">assets/</span> 資料夾中的檔名，自動生成於下方列表。
+          </p>
         </section>
 
-        <section class="section" id="method">
-          <h2>工作室写法（给画廊／评论者看的语言）</h2>
-          <ul>
-            <li><b style="color:var(--text)">材料不是工具，是夥伴</b>：滲透、暈染、回潮不是失誤，而是「畫面在發生」。</li>
-            <li><b style="color:var(--text)">画面不是被完成，是被允许</b>：反覆停下來、再回來，直到「可以停手」的判斷出現。</li>
-            <li><b style="color:var(--text)">不把话讲满</b>：留白与停顿，是作品的一部分。</li>
-          </ul>
-        </section>
+        
 
         <section class="section" id="works">
-          <h2>代表作（示意：请替换图片与信息）</h2>
-          <p>建议以「阶段」呈现，而不是单张作品的炫耀式介绍。每个阶段 2–3 件代表作即可。</p>
+          <h2>作品（自動生成）</h2>
+          <p>
+            你只要把命名好的 JPG 檔案放進 <span class="fine">assets/</span>，
+            這個頁面就會自動抓取檔名並生成作品卡（標題／媒材／尺寸）。
+          </p>
 
-          <div class="works" aria-label="作品图">
+          <div class="works" id="worksGrid" aria-label="作品图（自动生成）">
+            <!-- ✅ 预留：如果自动抓取失败，仍然保留两张手动示例图 -->
             <figure>
-              <img src="assets/work-01.jpg" alt="作品 01（請替換）" />
-              <figcaption><b>作品標題 01</b>｜年份｜水性媒材｜尺寸</figcaption>
+              <img src="assets/work-01.jpg" alt="作品 01（示意）" />
+              <figcaption><b>作品標題 01</b>｜年份｜媒材｜尺寸</figcaption>
             </figure>
             <figure>
-              <img src="assets/work-02.jpg" alt="作品 02（請替換）" />
-              <figcaption><b>作品標題 02</b>｜年份｜水性媒材｜尺寸</figcaption>
+              <img src="assets/work-02.jpg" alt="作品 02（示意）" />
+              <figcaption><b>作品標題 02</b>｜年份｜媒材｜尺寸</figcaption>
             </figure>
           </div>
 
-          <p class="fine">提示：WeChat/LINE 预览图通常取 <span class="fine">og:image</span>；建议使用 1200×630 的分享封面（assets/share-cover.jpg）。</p>
+          <p class="fine" style="margin-top:12px">
+            檔名命名建议（两种任选一种，越一致越省事）：<br/>
+            A) <span class="fine">001__作品名__水性媒材__100x80cm.jpg</span><br/>
+            B) <span class="fine">2025-001__作品名__水性媒材__100x80cm.jpg</span>
+          </p>
+
+          <p class="fine">
+            分享卡预览图通常取 <span class="fine">og:image</span>（建议 1200×630）。
+          </p>
         </section>
 
-        <section class="section" id="timeline">
-          <h2>创作脉络（用阶段讲，不用标签）</h2>
-          <div class="grid">
-            <div class="card">
-              <strong>早期｜具象／写意的累积</strong>
-              <span>把形象画到足够熟，熟到可以放下。</span>
-            </div>
-            <div class="card">
-              <strong>中期｜形象的松动</strong>
-              <span>笔触、水痕开始比物件更重要，画面出现停顿与呼吸。</span>
-            </div>
-            <div class="card">
-              <strong>近年｜抽象的确立</strong>
-              <span>不是追求新样貌，而是把「观看经验」凝成可持续的语言。</span>
-            </div>
-            <div class="card">
-              <strong>关键词（便于转述）</strong>
-              <span>从形象到痕迹｜从控制到允许｜从说明到停顿</span>
-            </div>
-          </div>
-        </section>
-
-        </article>
+        
+      </article>
 
       <footer>
         <div class="foot">
@@ -291,8 +341,6 @@
             © <span id="y"></span> 林順雄工作室 ｜ 聯絡信箱：
             <a href="mailto:sunlinart@gmail.com">sunlinart@gmail.com</a>
           </div>
-          <div class="fine">Last updated: <span id="u"></span></div>
-        </div>
           <div class="fine">Last updated: <span id="u"></span></div>
         </div>
       </footer>
@@ -309,5 +357,4 @@
   </script>
 </body>
 </html>
-
 
