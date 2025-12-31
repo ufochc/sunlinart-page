@@ -310,16 +310,10 @@
             <span class="fine">2025 抽象系列07_畫布_60x60 (4)_未售.jpg</span>
           </p>
         
+          <p id="worksStatus" class="fine">正在載入作品清單…</p>
+          
           <div class="works" id="worksGrid" aria-label="作品图（自动生成）">
-            <!-- 若自动抓取失败，会先显示示例图 -->
-            <figure>
-              <img src="assets/work-01.jpg" alt="作品（示意）" />
-              <figcaption><b>作品（示意）</b>｜媒材｜尺寸</figcaption>
-            </figure>
-            <figure>
-              <img src="assets/work-02.jpg" alt="作品（示意）" />
-              <figcaption><b>作品（示意）</b>｜媒材｜尺寸</figcaption>
-            </figure>
+            <!-- 這裡保持空白，作品將由 JavaScript 自動生成 -->
           </div>
         
           <p class="fine" style="margin-top:12px">
@@ -360,7 +354,7 @@
   const GH_PATH  = 'assets';
 
   const grid = document.getElementById('worksGrid');
-  if (!grid) throw new Error('worksGrid not found');
+  const statusEl = document.getElementById('worksStatus');
 
   const isSupported = (name) => {
     const n = String(name || '').toLowerCase();
@@ -420,21 +414,34 @@
   };
 
   async function loadWorks(){
+    if (!grid) return;
+
     const api = `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${GH_PATH}`;
     const res = await fetch(api, { headers: { 'Accept': 'application/vnd.github+json' }});
-    if (!res.ok) return; // 失败就保留示例图
+
+    if (!res.ok) {
+      if (statusEl) statusEl.textContent = `作品清單載入失敗（GitHub API ${res.status}）`;
+      return; // 保留示例图
+    }
 
     const items = await res.json();
-    if (!Array.isArray(items)) return;
+    if (!Array.isArray(items)) {
+      if (statusEl) statusEl.textContent = '作品清單格式異常（非陣列）';
+      return;
+    }
 
     const files = items
       .filter(it => it && it.type === 'file' && isSupported(it.name))
       .filter(it => !String(it.name).toLowerCase().startsWith('title-art.'))
-      // 默认排除示例图（你若把它们当真实作品就删掉这一行）
-      .filter(it => !String(it.name).toLowerCase().startsWith('work-0'))
+      .filter(it => !String(it.name).toLowerCase().startsWith('work-0')) // 排除示例
       .sort((a,b) => String(a.name).localeCompare(String(b.name), 'zh-Hant'));
 
-    if (files.length === 0) return;
+    if (files.length === 0) {
+      if (statusEl) statusEl.textContent = 'assets/ 內未找到作品圖片（jpg/jpeg/png/webp）';
+      return;
+    }
+
+    if (statusEl) statusEl.textContent = `已載入 ${files.length} 件作品。`;
 
     grid.innerHTML = '';
 
@@ -458,11 +465,14 @@
     }
   }
 
-  loadWorks().catch(() => { /* 保留示例图 */ });
+  loadWorks().catch(() => {
+    if (statusEl) statusEl.textContent = '作品載入失敗（請稍後重試或檢查 repo 權限）';
+  });
 </script>
 
 </body>
 </html>
+
 
 
 
