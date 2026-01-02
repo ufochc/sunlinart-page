@@ -1,0 +1,51 @@
+name: Artist Bot Auto-Pilot
+
+on:
+  push:
+    paths:
+      - 'assets/**'      # 只要 assets 有圖檔變動就執行
+      - 'template.html'  # 只要模板有改動就執行
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GH_PAT }}
+
+      # 1. 自動壓縮圖片 (解決你提到的圖檔過大問題)
+      - name: Compress Images
+        uses: calibreapp/image-actions@main
+        with:
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+          compressOnly: true
+          jpegQuality: "80"
+          pngQuality: "80"
+
+      # 2. 設定 Python 並執行 AI 生成 (解決報導內容沒變化的問題)
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: pip install google-generativeai
+
+      - name: Run AI Script
+        env:
+          GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+        run: python generate.py
+
+      # 3. 將結果推送到 GitHub
+      - name: Commit and Push
+        run: |
+          git config --global user.name "Artist-Bot"
+          git config --global user.email "bot@noreply.github.com"
+          git add index.html
+          git commit -m "AI 已根據新作品更新網頁內容與壓縮圖片" || echo "No changes"
+          git push
