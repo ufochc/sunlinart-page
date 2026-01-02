@@ -4,60 +4,29 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 
-  <!-- ✅ 分享卡片（WeChat / LINE / iMessage / FB 等都会优先读取这些） -->
   <title>林順雄｜從形象到痕跡：把觀看的經驗留下來</title>
   <meta name="description" content="林順雄近年的抽象創作：不是離開形象，而是把『觀看的經驗』留下來。水性媒材、留白、滲透與停頓，讓畫面慢慢發生。" />
 
   <meta property="og:type" content="article" />
   <meta property="og:locale" content="zh_TW" />
   <meta property="og:title" content="林順雄｜從形象到痕跡：把觀看的經驗留下來" />
-  <meta property="og:description" content="林順雄近年的抽象創作：不是離開形象，而是把『觀看的經驗』留下來。水性媒材、留白、滲透與停頓，讓畫面慢慢發生。" />
+  <meta property="og:description" content="林順雄近年的抽象創作：不是離開形象，而是把『觀看的經驗』留下來。" />
   <meta property="og:image" content="https://ufochc.github.io/sunlinart-page/assets/title-art.png" />
-  <meta property="og:image:width" content="1200" />
-  <meta property="og:image:height" content="630" />
   <meta property="og:url" content="https://ufochc.github.io/sunlinart-page/" />
   <meta property="og:site_name" content="Sunlin Art Studio" />
 
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="林順雄｜從形象到痕跡：把觀看的經驗留下來" />
-  <meta name="twitter:description" content="不是離開形象，而是把觀看的經驗留下來。" />
-  <meta name="twitter:image" content="https://ufochc.github.io/sunlinart-page/assets/title-art.png" />
-
-  <!-- ✅ 文章结构化数据（有助于搜索与被引用） -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Article",
-    "headline": "林順雄｜從形象到痕跡：把觀看的經驗留下來",
-    "description": "林順雄近年的抽象創作：不是離開形象，而是把『觀看的經驗』留下來。",
-    "image": ["https://ufochc.github.io/sunlinart-page/assets/title-art.png"],
-    "author": {"@type": "Person", "name": "林順雄"},
-    "publisher": {"@type": "Organization", "name": "林順雄工作室"},
-    "datePublished": "2025-12-31",
-    "dateModified": "2025-12-31",
-    "mainEntityOfPage": "https://ufochc.github.io/sunlinart-page/"
-  }
-  </script>
-
   <style>
-    /*
-      设计基准（参考）：
-      - Tate / MoMA / Fondation Cartier 展览通稿页
-      - Hauser & Wirth / David Zwirner Exhibition Press
-      核心原则：白不是纯白，而是“纸感”；设计退后，作品与文字在前。
-    */
-
     :root{
-      --bg:#f4f3ef;          /* 画册纸张白（国际主流） */
-      --paper:#ffffff;      /* 正文白 */
-      --text:#1f1f1f;       /* 柔黑 */
-      --muted:#6d6d6d;      /* 注释灰 */
-      --line:rgba(0,0,0,.07); /* 极细边界 */
-      --soft:#efefeb;       /* 引文浅底 */
-      --radius:10px;        /* 更接近学术出版 */
-      --max: 760px;         /* 收紧版心，像展览手册 */
-      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Noto Sans", "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      --bg:#f4f3ef;
+      --paper:#ffffff;
+      --text:#1f1f1f;
+      --muted:#6d6d6d;
+      --line:rgba(0,0,0,.07);
+      --soft:#efefeb;
+      --radius:10px;
+      --max: 760px;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, sans-serif;
     }
 
     *{box-sizing:border-box}
@@ -68,156 +37,56 @@
       color: var(--text);
       letter-spacing: .12px;
       -webkit-font-smoothing: antialiased;
-      text-rendering: optimizeLegibility;
     }
 
     a{color:inherit; text-decoration:none}
+    .wrap{ max-width: var(--max); margin: 0 auto; padding: 0 18px; }
 
-    .wrap{
-      max-width: var(--max);
-      margin: 0 auto;
-      padding: 0 18px;
-    }
-
-    /* Header / Cover */
     header{padding: 32px 0 18px;}
-    .mast{
-      background: var(--paper);
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      overflow:hidden;
-    }
+    .mast{ background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); overflow:hidden; }
     .cover{
       width:100%;
       aspect-ratio: 1200/630;
-      background: url('assets/title-art.png') center/cover no-repeat;
+      background: #ddd url('assets/title-art.png') center/cover no-repeat;
       border-bottom: 1px solid var(--line);
     }
     .head{padding: 22px 22px 18px;}
+    .kicker{ font-family: var(--mono); font-size: 11px; color: var(--muted); letter-spacing: 1px; }
+    h1{ margin: 14px 0 14px; font-size: 26px; line-height: 1.4; font-weight: 500; }
+    .sub{ margin:0; color: var(--muted); font-size: 15px; line-height: 1.9; max-width: 58ch; }
 
-    .kicker{
-      font-family: var(--mono);
-      font-size: 11px;
-      color: var(--muted);
-      letter-spacing: 1px;
-    }
-    h1{
-      margin: 14px 0 14px;
-      font-size: 26px;
-      line-height: 1.4;
-      font-weight: 500;
-    }
-    .sub{
-      margin:0;
-      color: var(--muted);
-      font-size: 15px;
-      line-height: 1.9;
-      max-width: 58ch;
-    }
-
-    .meta{
-      display:flex;
-      gap: 8px;
-      flex-wrap:wrap;
-      margin-top: 14px;
-      font-size: 11px;
-      color: var(--muted);
-    }
-    .meta span{
-      padding: 4px 8px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      background: transparent;
-    }
+    .meta{ display:flex; gap: 8px; flex-wrap:wrap; margin-top: 14px; font-size: 11px; color: var(--muted); }
+    .meta span{ padding: 4px 8px; border: 1px solid var(--line); border-radius: 999px; }
 
     main{padding: 22px 0 40px;}
-    .paper{
-      background: var(--paper);
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-    }
-
-    .section{
-      padding: 22px 22px 20px;
-      border-top: 1px solid var(--line);
-    }
+    .paper{ background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); }
+    .section{ padding: 22px 22px 20px; border-top: 1px solid var(--line); }
     .section:first-child{border-top:0}
 
-    h2{
-      margin: 0 0 16px;
-      font-size: 17px;
-      font-weight: 500;
-    }
+    h2{ margin: 0 0 16px; font-size: 17px; font-weight: 500; }
+    p{ margin: 12px 0; color: var(--muted); line-height: 1.95; font-size: 14px; }
 
-    p{
-      margin: 12px 0;
-      color: var(--muted);
-      line-height: 1.95;
-      font-size: 14px;
-    }
+    .quote{ margin: 22px 0 18px; padding: 16px 18px; background: var(--soft); border-left: 3px solid rgba(0,0,0,.18); }
+    .quote b{ display:block; font-size: 14px; line-height: 1.9; color: var(--text); font-weight: 500; }
+    .quote small{ display:block; margin-top: 8px; font-size: 12px; color: var(--muted); font-family: var(--mono); }
 
-    /* Quote block – international exhibition standard */
-    .quote{
-      margin: 22px 0 18px;
-      padding: 16px 18px;
-      background: var(--soft);
-      border-left: 3px solid rgba(0,0,0,.18);
-    }
-    .quote b{
-      display:block;
-      font-size: 14px;
-      line-height: 1.9;
-      color: var(--text);
-      font-weight: 500;
-    }
-    .quote small{
-      display:block;
-      margin-top: 8px;
-      font-size: 12px;
-      color: var(--muted);
-      font-family: var(--mono);
-    }
-
-    /* Works grid */
-    .works{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-      margin-top: 14px;
-    }
+    /* 作品展示格線 */
+    .works{ display:grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px; }
     @media (max-width: 720px){.works{grid-template-columns:1fr}}
 
-    figure{
-      margin:0;
-      background: var(--paper);
-      border: 1px solid var(--line);
-      border-radius: 6px;
-      overflow:hidden;
-    }
-    figure img{width:100%; height:auto; display:block}
-    figcaption{
-      padding: 10px 12px;
-      font-size: 12px;
-      color: var(--muted);
-      line-height: 1.6;
-    }
-    figcaption b{color: var(--text); font-weight: 500}
+    figure{ margin:0; background: var(--paper); border: 1px solid var(--line); border-radius: 6px; overflow:hidden; }
+    figure img{ width:100%; height:auto; display:block; background: #f9f9f9; }
+    figcaption{ padding: 10px 12px; font-size: 12px; color: var(--muted); line-height: 1.6; }
+    figcaption b{ color: var(--text); font-weight: 500; display: block; margin-bottom: 2px; }
 
-    .fine{font-family: var(--mono); font-size: 12px; color: var(--muted)}
+    .fine{ font-family: var(--mono); font-size: 12px; color: var(--muted); }
+    footer{ padding: 24px 0 0; font-size: 12px; color: var(--muted); }
+    .foot{ display:flex; justify-content:space-between; border-top: 1px solid var(--line); padding-top: 12px; flex-wrap:wrap; }
 
-    footer{
-      padding: 24px 0 0;
-      font-size: 12px;
-      color: var(--muted);
-    }
-    .foot{
-      display:flex;
-      justify-content:space-between;
-      gap: 10px;
-      border-top: 1px solid var(--line);
-      padding-top: 12px;
-      flex-wrap:wrap;
-    }
+    /* 按鈕樣式 */
+    .btn{ display:inline-block; padding: 8px 16px; border: 1px solid var(--line); border-radius: 6px; font-size: 13px; margin-right: 8px; transition: all .2s; }
+    .btn.primary{ background: var(--text); color: #fff; border-color: var(--text); }
+    .btn:hover{ opacity: 0.8; }
   </style>
 </head>
 
@@ -225,7 +94,7 @@
   <header>
     <div class="wrap">
       <div class="mast">
-        <div class="cover" aria-label="分享封面（请替换 assets/share-cover.jpg）"></div>
+        <div class="cover"></div>
         <div class="head">
           <div class="kicker">STUDIO RELEASE</div>
           <h1>林順雄｜從形象到痕跡：把觀看的經驗留下來</h1>
@@ -235,18 +104,18 @@
             作品因此不追求「像不像」，而更在意「真不真」。
           </p>
 
-          <div class="meta" aria-label="文章資訊">
+          <div class="meta">
             <span>作者：林順雄工作室</span>
-            <span>發布：<span id="d">2025-12-31</span></span>
+            <span>發布：<span id="pubDate">2025-05-20</span></span>
             <span>主題：創作理念／方法／作品脈絡</span>
           </div>
 
-          <div class="actions" style="margin-top:12px">
-            <a class="btn primary" href="#works">看代表作</a>
-            <a class="btn" href="#idea">阅读理念</a>
+          <div class="actions" style="margin-top:16px">
+            <a class="btn primary" href="#works">瀏覽作品</a>
+            <a class="btn" href="#statement">閱讀理念</a>
           </div>
 
-          <div class="quote" role="note" aria-label="藝術家短句">
+          <div class="quote">
             <b>很多人問我，為什麼不再畫得那麼清楚？其實我沒有離開它們。我只是不再執著於它們的樣子。</b>
             <small>— 林順雄</small>
           </div>
@@ -257,7 +126,7 @@
 
   <main>
     <div class="wrap">
-      <article class="paper" aria-label="新聞頁內容">
+      <article class="paper">
 
         <section class="section" id="statement">
           <h2>藝術家自述｜關於這次的作品</h2>
@@ -271,7 +140,7 @@
             當我不再急著把事情交代清楚，畫面反而開始留下時間。
           </p>
 
-          <div class="quote" role="note" aria-label="藝術家訪談節錄">
+          <div class="quote">
             <b>我不是不畫了，我只是不再一直追著畫面跑。很多時候，是等它自己慢慢出現。</b>
             <small>— 林順雄</small>
           </div>
@@ -281,209 +150,144 @@
             有些則刻意保留了沒有被「處理完」的區域。
             那些看似停下來的地方，往往才是我真正下決定的時刻。
           </p>
-
-          <p>
-            例如在《靜置的邊界》（檔名示例：<span class="fine">012__靜置的邊界__水性媒材__100x80cm.jpg</span>）這件作品裡，
-            我並沒有試圖把畫面收得完整，而是讓水痕在邊緣自然停住。
-            對我來說，那個停住的瞬間，比任何形象都來得真實。
-          </p>
-
-          <p>
-            另一件《未命名（留白）》(<span class="fine">027__未命名（留白）__水性媒材__120x90cm.jpg</span>)，
-            中央的大面積空白不是預先設計的結果，
-            而是在多次覆蓋之後，我選擇不再介入。
-            那裡留下的，是我與畫面之間的一次讓步。
-          </p>
-
-          <p class="fine">
-            上述作品僅作為閱讀線索舉例；完整作品將依 <span class="fine">assets/</span> 資料夾中的檔名，自動生成於下方列表。
-          </p>
         </section>
-
-        
 
         <section class="section" id="works">
-          <h2>作品（自動生成）</h2>
-          <p>
-            你只要把 JPG 檔案放進 <span class="fine">assets/</span>，這頁就會自動抓取並生成作品卡。
-            目前支援你提供的命名格式，例如：<br/>
-            <span class="fine">2025 抽象系列07_畫布_60x60 (4)_未售.jpg</span>
-          </p>
-        
-          <p id="worksStatus" class="fine">正在載入作品清單…</p>
+          <h2>作品展示（自動讀取自 assets 資料夾）</h2>
+          <p id="worksStatus" class="fine">正在檢索作品清單...</p>
           
-          <div class="works" id="worksGrid" aria-label="作品图（自动生成）">
-            <!-- 這裡保持空白，作品將由 JavaScript 自動生成 -->
+          <div class="works" id="worksGrid">
+            </div>
+
+          <div style="margin-top:24px; padding-top:18px; border-top:1px dashed var(--line);">
+            <p class="fine">
+              <b>命名解析規則：</b><br/>
+              系統會自動解析檔名，例如：<span style="color:var(--text)">2025 抽象系列07_畫布_60x60 (4)_未售.jpg</span><br/>
+              會自動拆解為：<b>作品名稱</b>、<b>媒材</b>、<b>尺寸</b>與<b>狀態</b>。
+            </p>
           </div>
-        
-          <p class="fine" style="margin-top:12px">
-            命名解析规则：<br/>
-            <span class="fine">{年份 空格 作品名}_{媒材}_{尺寸} (F數)_{售况}.jpg</span><br/>
-            例：<span class="fine">2025 抽象系列07_畫布_60x60 (4)_未售.jpg</span>
-            → 顯示為「抽象系列07｜畫布｜60×60｜4F｜未售」。
-          </p>
         </section>
-
-
-        
       </article>
 
       <footer>
         <div class="foot">
-          <div>
-            © <span id="y"></span> 林順雄工作室 ｜ 聯絡信箱：
-            <a href="mailto:sunlinart@gmail.com">sunlinart@gmail.com</a>
-          </div>
-          <div class="fine">Last updated: <span id="u"></span></div>
+          <div>© <span id="year"></span> 林順雄工作室 ｜ <a href="mailto:sunlinart@gmail.com">sunlinart@gmail.com</a></div>
+          <div class="fine">Last updated: <span id="updateDate"></span></div>
         </div>
       </footer>
     </div>
   </main>
 
 <script>
-  // ===== 日期（页脚与发布标签） =====
-  (function(){
+  // ===== 1. 設定區（請確認這兩個值正確） =====
+  const GH_USER = 'ufochc';
+  const GH_REPO = 'sunlinart-page';
+  const GH_FOLDER = 'assets';
+
+  // ===== 2. 日期處理 =====
+  (function updateDates(){
     const now = new Date();
-    const iso = now.toISOString().slice(0,10);
-    const y = document.getElementById('y');
-    const u = document.getElementById('u');
-    const d = document.getElementById('d');
-    if (y) y.textContent = now.getFullYear();
-    if (u) u.textContent = iso;
-    if (d) d.textContent = iso;
+    document.getElementById('year').textContent = now.getFullYear();
+    document.getElementById('updateDate').textContent = now.toISOString().slice(0,10);
   })();
 
-  // ===== 工具函数 =====
-  function isSupported(name){
-    const n = String(name || '').toLowerCase();
+  // ===== 3. 工具函式 =====
+  function isImage(name){
+    const n = name.toLowerCase();
     return n.endsWith('.jpg') || n.endsWith('.jpeg') || n.endsWith('.png') || n.endsWith('.webp');
   }
 
-  function stripExt(name){
-    const s = String(name || '');
-    const i = s.lastIndexOf('.');
-    return i >= 0 ? s.slice(0, i) : s;
-  }
-
-  function escapeHtml(s){
-    return String(s)
-      .replaceAll('&','&amp;')
-      .replaceAll('<','&lt;')
-      .replaceAll('>','&gt;')
-      .replaceAll('"','&quot;')
-      .replaceAll("'",'&#39;');
-  }
-
-  // 解析格式：2025 抽象系列07_畫布_60x60 (4)_未售.jpg
   function parseName(filename){
-    const base = stripExt(filename);
-    const parts = base.split('_').map(x => x.trim()).filter(Boolean);
+    // 去除副檔名
+    const base = filename.replace(/\.[^/.]+$/, "");
+    // 依底線分割
+    const parts = base.split('_').map(s => s.trim());
 
-    let year = '';
     let title = parts[0] || base;
+    let year = "";
 
-    // 年份判断：前4位数字 + 空格
-    if (title.length >= 6) {
-      const y = title.slice(0,4);
-      const space = title.charAt(4);
-      if (y >= '1900' && y <= '2100' && space === ' ') {
-        year = y;
-        title = title.slice(5).trim();
-      }
+    // 提取年份 (2025 標題)
+    if (title.length >= 5 && !isNaN(title.slice(0,4)) && title.charAt(4) === ' ') {
+      year = title.slice(0,4);
+      title = title.slice(5);
     }
 
-    const medium = parts[1] || '';
+    const medium = parts[1] || "";
+    let sizeRaw = parts[2] || "";
+    let fNo = "";
 
-    // 尺寸段可能包含 (4)
-    let sizeRaw = parts[2] || '';
-    let fNo = '';
-    const lp = sizeRaw.lastIndexOf('(');
-    const rp = sizeRaw.lastIndexOf(')');
-    if (lp >= 0 && rp > lp) {
-      const inside = sizeRaw.slice(lp+1, rp).trim();
-      if (inside && inside.split('').every(ch => ch >= '0' && ch <= '9')) {
-        fNo = inside + 'F';
-        sizeRaw = (sizeRaw.slice(0, lp) + sizeRaw.slice(rp+1)).trim();
-      }
+    // 提取 F 數，例如 (4)
+    const fMatch = sizeRaw.match(/\((\d+)\)/);
+    if (fMatch) {
+      fNo = fMatch[1] + "F";
+      sizeRaw = sizeRaw.replace(fMatch[0], "").trim();
     }
 
-    let size = sizeRaw.trim().replaceAll('x','×').replaceAll('X','×');
-    const status = parts[3] || '';
+    const size = sizeRaw.replace(/[xX]/g, "×");
+    const status = parts[3] || "";
 
-    return { year, title, medium, size, fNo, status };
+    return { title, year, medium, size, fNo, status };
   }
 
-  // ===== 从 works.json 生成作品卡（最稳）=====
-  (async function(){
+  // ===== 4. 核心：獲取 GitHub 檔案清單 =====
+  async function loadImages() {
     const grid = document.getElementById('worksGrid');
-    const statusEl = document.getElementById('worksStatus');
-
-    if (!grid) return;
+    const status = document.getElementById('worksStatus');
 
     try {
-      if (statusEl) statusEl.textContent = '正在載入作品清單…';
+      // 呼叫 GitHub API
+      const response = await fetch(`https://api.github.com/repos/${GH_USER}/${GH_REPO}/contents/${GH_FOLDER}`);
+      
+      if (!response.ok) throw new Error('無法讀取目錄');
 
-      // 关键：你要在 assets/ 放这个 works.json
-      const res = await fetch('assets/works.json', { cache: 'no-store' });
+      const data = await response.json();
+      
+      // 過濾出圖片，且排除標題圖 (title-art.png)
+      const images = data.filter(file => 
+        file.type === 'file' && 
+        isImage(file.name) && 
+        file.name !== 'title-art.png'
+      );
 
-      if (!res.ok) {
-        if (statusEl) statusEl.textContent = `works.json 載入失敗（HTTP ${res.status}）`;
+      if (images.length === 0) {
+        status.textContent = "assets 資料夾中目前沒有作品圖片。";
         return;
       }
 
-      const list = await res.json();
-      if (!Array.isArray(list) || list.length === 0) {
-        if (statusEl) statusEl.textContent = 'works.json 為空或格式不正確';
-        return;
-      }
-
-      // 只保留图片
-      const files = list
-        .map(x => String(x || '').trim())
-        .filter(x => x && isSupported(x));
-
-      if (files.length === 0) {
-        if (statusEl) statusEl.textContent = 'works.json 內沒有可用圖片檔名（jpg/jpeg/png/webp）';
-        return;
-      }
-
-      if (statusEl) statusEl.textContent = `已載入 ${files.length} 件作品。`;
-
+      status.textContent = `共發現 ${images.length} 件作品。`;
       grid.innerHTML = '';
 
-      for (const name of files) {
-        const meta = parseName(name);
+      images.forEach(file => {
+        const meta = parseName(file.name);
+        
+        // 組合說明文字
+        const info = [];
+        if (meta.medium) info.push(meta.medium);
+        if (meta.size) info.push(meta.size);
+        if (meta.fNo) info.push(meta.fNo);
+        if (meta.status) info.push(meta.status);
 
-        const bits = [];
-        if (meta.medium) bits.push(meta.medium);
-        if (meta.size) bits.push(meta.size);
-        if (meta.fNo) bits.push(meta.fNo);
-        if (meta.status) bits.push(meta.status);
+        const captionHtml = `
+          <figure>
+            <img src="${file.path}" alt="${meta.title}" loading="lazy">
+            <figcaption>
+              <b>${meta.title} ${meta.year ? '(' + meta.year + ')' : ''}</b>
+              ${info.join('｜')}
+            </figcaption>
+          </figure>
+        `;
+        grid.insertAdjacentHTML('beforeend', captionHtml);
+      });
 
-        const caption = bits.join('｜');
-        const title = meta.title || stripExt(name);
-
-        grid.insertAdjacentHTML('beforeend',
-          `<figure>
-            <img src="assets/${escapeHtml(name)}" alt="${escapeHtml(title)}" loading="lazy" />
-            <figcaption><b>${escapeHtml(title)}</b>${caption ? '｜' + escapeHtml(caption) : ''}</figcaption>
-          </figure>`
-        );
-      }
-
-    } catch (e) {
-      if (statusEl) statusEl.textContent = '作品載入失敗（請檢查 works.json 是否存在與格式）';
+    } catch (err) {
+      console.error(err);
+      status.textContent = "載入失敗，請確認 GitHub Repository 是否為公開，或檢查網路狀態。";
     }
-  })();
-</script>
+  }
 
+  // 執行
+  loadImages();
+</script>
 
 </body>
 </html>
-
-
-
-
-
-
-
