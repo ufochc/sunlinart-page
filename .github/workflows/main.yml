@@ -1,52 +1,36 @@
 name: Artist Bot Auto-Pilot
-
 on:
   push:
     paths:
-      - 'assets/**'      # 只要 assets 資料夾有新圖就執行
-      - 'template.html'  # 只要模板有改動就執行
-  workflow_dispatch:     # 允許手動點擊執行
-
+      - 'assets/**'
 jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
         with:
-          token: ${{ secrets.GH_PAT }} # 使用你剛才設定好的 PAT
-
-      # 1. 執行圖片壓縮
+          token: ${{ secrets.GH_PAT }}
       - name: Compress Images
         uses: calibreapp/image-actions@main
         with:
           githubToken: ${{ secrets.GITHUB_TOKEN }}
           compressOnly: true
-          jpegQuality: "80"
-          pngQuality: "80"
-
-      # 2. 執行 AI 文字生成
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.10'
-
-      - name: Install AI Tools
-        run: pip install google-generativeai pillow
-
-      - name: Run AI Script
+      - name: Run Script
         env:
           GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
-        run: python generate.py
-
-      # 3. 把處理好的 index.html 和壓縮圖推送到網頁
-      - name: Commit and Push
         run: |
-          git config --global user.name "Artist-Bot"
-          git config --global user.email "bot@noreply.github.com"
+          pip install google-generativeai
+          python generate.py
+      - name: Deploy
+        run: |
+          git config --global user.name "ArtistBot"
+          git config --global user.email "bot@example.com"
           git add index.html assets/
-          git commit -m "AI 藝術家導覽已更新並完成圖片壓縮" || echo "無變動需求"
+          git commit -m "AI Updated Content" || exit 0
           git push
