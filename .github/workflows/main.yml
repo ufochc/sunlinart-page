@@ -1,8 +1,9 @@
 name: Artist Bot Auto-Pilot
 on:
   push:
-    paths:
-      - 'assets/**'
+    branches:
+      - main  # 只要 main 分支有任何變動就跑
+  workflow_dispatch: # 增加這個，讓你可以在 Actions 頁面手動點按鈕啟動
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -12,11 +13,6 @@ jobs:
       - uses: actions/checkout@v3
         with:
           token: ${{ secrets.GH_PAT }}
-      - name: Compress Images
-        uses: calibreapp/image-actions@main
-        with:
-          githubToken: ${{ secrets.GITHUB_TOKEN }}
-          compressOnly: true
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
@@ -31,6 +27,6 @@ jobs:
         run: |
           git config --global user.name "ArtistBot"
           git config --global user.email "bot@example.com"
-          git add index.html assets/
-          git commit -m "AI Updated Content" || exit 0
+          git add index.html
+          git commit -m "AI 修復亂碼並更新內容" || exit 0
           git push
