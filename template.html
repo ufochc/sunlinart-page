@@ -2,45 +2,23 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>林順雄｜從形象到痕跡</title>
   <style>
-    /* 請在此處貼上你原本 index.html 裡面的所有 <style> 內容 */
-    .ai-insight {
-      padding: 20px;
-      background: #f9f9f7;
-      border-left: 2px solid #d1d1ca;
-      margin: -10px 0 30px 0;
-      font-size: 14px;
-      line-height: 1.8;
-      color: #555;
-      font-style: italic;
-    }
-    figure { margin-bottom: 10px !important; }
+    :root{ --bg:#f4f3ef; --paper:#ffffff; --text:#1f1f1f; --line:rgba(0,0,0,.07); --max: 760px; }
+    body{ background: var(--bg); color: var(--text); font-family: sans-serif; margin:0; }
+    .wrap{ max-width: var(--max); margin: 0 auto; padding: 40px 20px; }
+    .paper{ background: var(--paper); border: 1px solid var(--line); border-radius: 10px; padding: 30px; }
+    img{ width:100%; height:auto; border-radius: 4px; margin-bottom: 10px; }
+    .ai-insight { padding: 20px; background: #f9f9f7; border-left: 3px solid #d1d1ca; margin-bottom: 40px; font-style: italic; line-height: 1.8; }
   </style>
 </head>
 <body>
-  <header> ... (請貼上你原本的 Header HTML) ... </header>
-
-  <main>
-    <div class="wrap">
-      <article class="paper">
-        <section class="section">
-          <h2>作品觀照與自述</h2>
-          <p class="fine">以下文字由藝術家林順雄觀照作品後感悟所得。</p>
-        </section>
-        
-        <section class="section">
-          </section>
-      </article>
-      
-      <footer>
-        <div class="foot">
-          <div>© 林順雄工作室</div>
-          <div class="fine">系統自動更新於：</div>
-        </div>
-      </footer>
-    </div>
-  </main>
+  <div class="wrap">
+    <article class="paper">
+      <h1>林順雄｜創作隨筆</h1>
+      <footer style="margin-top:40px; font-size:12px; color:#888;">
+        更新日期：</footer>
+    </article>
+  </div>
 </body>
 </html>
