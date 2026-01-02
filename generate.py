@@ -3,73 +3,50 @@ import google.generativeai as genai
 from datetime import datetime
 import re
 
-# 1. 配置 AI 金鑰
-# 這些金鑰會從 GitHub Secrets 自動抓取，請確保名稱為 GOOGLE_API_KEY
 genai.configure(api_key=os.environ["GOOGLE_API_KEY"])
 model = genai.GenerativeModel('gemini-1.5-flash')
 
 def process():
+    # 強制設定：永遠從 template.html 開始，不看舊的 index.html
+    template_path = 'template.html'
+    output_path = 'index.html'
     assets_dir = 'assets'
-    html_snippets = ""
     
-    # 2. 抓取 assets 資料夾中的圖片 (排除封面圖)
-    if not os.path.exists(assets_dir):
-        print("錯誤：找不到 assets 資料夾")
+    # 1. 讀取模板 (母檔)
+    if not os.path.exists(template_path):
+        print("錯誤：找不到 template.html")
         return
+    with open(template_path, 'r', encoding='utf-8') as f:
+        content = f.read()
 
+    # 2. 處理圖片
+    html_snippets = ""
     imgs = [f for f in os.listdir(assets_dir) if f.lower().endswith(('.jpg', '.jpeg', '.png')) and f != 'title-art.png']
-    imgs.sort(reverse=True) # 讓最新的作品排在最上面
-
-    print(f"找到 {len(imgs)} 件作品，開始 AI 藝評生成...")
+    imgs.sort(reverse=True)
 
     for name in imgs:
         path = os.path.join(assets_dir, name)
-        print(f"正在分析作品: {name}")
-        
         try:
-            # 呼叫 Gemini AI 看圖說話
             sample_file = genai.upload_file(path=path)
-            prompt = "你現在是藝術家林順雄。請看著這張你的畫作，以第一人稱寫一段約 60 字的創作隨筆。語氣要淡然、內斂、充滿禪意與水的流動感。不要描述畫面內容，要描述創作時的心境。"
-            response = model.generate_content([prompt, sample_file])
+            response = model.generate_content(["你現在是藝術家林順雄，請對這張畫寫一段50字創作隨筆", sample_file])
             text = response.text.strip()
-        except Exception as e:
-            print(f"AI 生成出錯 ({name}): {e}")
-            text = "水墨在紙上靜靜流淌，留下的不僅是顏色，更是時間停頓的痕跡。"
-
-        # 3. 建立作品的 HTML 區塊
-        title = name.split('_')[0]
-        html_snippets += f'''
-      <div class="work-item">
-        <img src="assets/{name}" alt="{title}">
-        <div class="ai-insight">{text}</div>
-      </div>'''
-
-    # 4. 讀取模板並執行精準替換
-    try:
-        with open('template.html', 'r', encoding='utf-8') as f:
-            template_content = f.read()
+        except:
+            text = "水痕在紙上靜靜流淌。"
         
-        # 使用 re.DOTALL 確保能跨行替換兩個標記之間的內容
-        # 這樣就不會動到網頁的其他部分，徹底解決亂碼問題
-        final_content = re.sub(
-            r'.*?', 
-            f'{html_snippets}\n      ', 
-            template_content, 
-            flags=re.DOTALL
-        )
-        
-        # 替換更新日期
-        update_time = datetime.now().strftime("%Y-%m-%d")
-        final_content = final_content.replace('', update_time)
+        html_snippets += f'\n<div class="work-item"><img src="assets/{name}"><div class="ai-insight">{text}</div></div>'
 
-        # 5. 寫入 index.html
-        with open('index.html', 'w', encoding='utf-8') as f:
-            f.write(final_content)
-        
-        print(f"成功！index.html 已更新，日期：{update_time}")
+    # 3. 執行替換 (使用最嚴謹的正則表達式)
+    # 確保只替換一次，不重複疊加
+    content = re.sub(r'.*?', 
+                     f'{html_snippets}\n', 
+                     content, flags=re.DOTALL)
+    
+    content = content.replace('', datetime.now().strftime("%Y-%m-%d"))
 
-    except FileNotFoundError:
-        print("錯誤：找不到 template.html，請確認檔案是否存在。")
+    # 4. 寫入新的 index.html (這會直接覆蓋掉舊的檔案)
+    with open(output_path, 'w', encoding='utf-8') as f:
+        f.write(content)
+    print(f"成功修復！產生的檔案大小約為: {len(content)/1024:.2f} KB")
 
 if __name__ == "__main__":
     process()
